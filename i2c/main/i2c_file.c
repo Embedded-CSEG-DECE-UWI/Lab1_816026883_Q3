@@ -44,7 +44,7 @@ static const char *TAG = "main";
 #define NACK_VAL                            0x1              /*!< I2C nack value */
 #define LAST_NACK_VAL                       0x2              /*!< I2C last_nack value */
 
-
+static esp_err_t i2c_master_ads1115_read_string(i2c_port_t i2c_num, uint8_t reg_addr, uint16_t *data)
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////INITIALISE////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -200,7 +200,7 @@ static void i2c_task(void *arg)
             ESP_LOGI(TAG, "Succesfully read value from from ADC \n");
 
             printf("The return from the ADC is ");
-            printf(ret);
+            printf(int(ret));
             printf("\n");
 
 
