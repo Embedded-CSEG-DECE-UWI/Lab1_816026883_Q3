@@ -72,7 +72,7 @@ static esp_err_t i2c_master_ads1115_init(i2c_port_t i2c_num)
     vTaskDelay(100 / portTICK_RATE_MS);
     i2c_master_init();
     
-    ESP_ERROR_CHECK( i2c_master_ads1115_write_string(i2c_num, 0x01 , 0b1000010010000011 , 2 ));
+    ESP_ERROR_CHECK( i2c_master_ads1115_write_string(i2c_num, 0x01 , 0b1000010010000011 ));
     //THe binary string represents the configuration bits given in the quickstart section of the ads1115 datasheet
 
     return ESP_OK;
@@ -188,7 +188,7 @@ static void i2c_task(void *arg)
     double asignal;
     //static uint32_t error_count = 0;
     int ret;
-    printf("Simple comment before starting any actual adc or i2c stuff ")
+    printf("Simple comment before starting any actual adc or i2c stuff ");
 
     i2c_master_ads1115_init(I2C_EXAMPLE_MASTER_NUM);
 
