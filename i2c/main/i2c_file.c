@@ -210,14 +210,14 @@ static void i2c_task(void *arg)
             asignal = (double) sensor_data * 1.25e-4;
             ESP_LOGI(TAG,"Voltage: %d.%d V\n",(uint16_t)asignal, (uint16_t)(asignal * 100) % 100);
             
-            vTaskDelay(1000 / portTICK_RATE_MS);
+            vTaskDelay(5000 / portTICK_RATE_MS);
         } 
         else 
         {
             ESP_LOGE(TAG, "No acknowledge bit, sensor not connected...skip...\n");
         }
 
-        vTaskDelay(1000 / portTICK_RATE_MS);
+        vTaskDelay(5000 / portTICK_RATE_MS);
     }
 
     //i2c_driver_delete(I2C_EXAMPLE_MASTER_NUM);
