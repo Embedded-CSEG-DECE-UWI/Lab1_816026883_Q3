@@ -190,7 +190,7 @@ static void i2c_task(void *arg)
     double asignal;
     //static uint32_t error_count = 0;
     int ret;
-    printf("Simple comment before starting any actual adc or i2c stuff ");
+    //printf("Simple comment before starting any actual adc or i2c stuff ");
 
     i2c_master_ads1115_init(I2C_EXAMPLE_MASTER_NUM);
 
@@ -207,17 +207,19 @@ static void i2c_task(void *arg)
 
 
             ESP_LOGI(TAG, "Sensor Data: %d\n", (int)sensor_data);
-            asignal = (double) sensor_data * 1.25e-4;
-            ESP_LOGI(TAG,"Voltage: %d.%d V\n",(uint16_t)asignal, (uint16_t)(asignal * 100) % 100);
+            asignal = (double) sensor_data * 2;
+            printf("/n");
+            printf(TAG,"Voltage: %d.%d V\n",(uint16_t)asignal, (uint16_t)(asignal * 100) % 100);
+            printf("/n");
             
-            vTaskDelay(5000 / portTICK_RATE_MS);
+            vTaskDelay(50000 / portTICK_RATE_MS);
         } 
         else 
         {
             ESP_LOGE(TAG, "No acknowledge bit, sensor not connected...skip...\n");
         }
 
-        vTaskDelay(5000 / portTICK_RATE_MS);
+        vTaskDelay(50000 / portTICK_RATE_MS);
     }
 
     //i2c_driver_delete(I2C_EXAMPLE_MASTER_NUM);
