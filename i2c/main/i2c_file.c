@@ -44,43 +44,8 @@ static const char *TAG = "main";
 #define NACK_VAL                            0x1              /*!< I2C nack value */
 #define LAST_NACK_VAL                       0x2              /*!< I2C last_nack value */
 
-static esp_err_t i2c_master_ads1115_read_string(i2c_port_t i2c_num, uint8_t reg_addr, uint16_t *data);
-///////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////INITIALISE////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////////////
+//static esp_err_t i2c_master_ads1115_read_string(i2c_port_t i2c_num, uint8_t reg_addr, uint16_t *data);
 
-
-static esp_err_t i2c_master_init()
-{
-    int i2c_master_port = I2C_EXAMPLE_MASTER_NUM;
-    i2c_config_t conf;
-    conf.mode = I2C_MODE_MASTER;
-    conf.sda_io_num = I2C_EXAMPLE_MASTER_SDA_IO;
-    conf.sda_pullup_en = 1;
-    conf.scl_io_num = I2C_EXAMPLE_MASTER_SCL_IO;
-    conf.scl_pullup_en = 1;
-    conf.clk_stretch_tick = 300; // 300 ticks, Clock stretch is about 210us, you can make changes according to the actual situation.
-    ESP_ERROR_CHECK(i2c_driver_install(i2c_master_port, conf.mode));
-    ESP_ERROR_CHECK(i2c_param_config(i2c_master_port, &conf));
-
-    return ESP_OK;
-}
-
-static esp_err_t i2c_master_ads1115_init(i2c_port_t i2c_num)
-{
-    uint8_t cmd_data;
-    vTaskDelay(100 / portTICK_RATE_MS);
-    i2c_master_init();
-    
-    ESP_ERROR_CHECK( i2c_master_ads1115_write_string(i2c_num, 0x01 , 0b1000010010000011 ));
-    //THe binary string represents the configuration bits given in the quickstart section of the ads1115 datasheet
-
-    return ESP_OK;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////INITIALISE////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////////////
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////READ/////////////////////////////////////////////
@@ -177,6 +142,43 @@ static esp_err_t i2c_master_ads1115_write_string(i2c_port_t i2c_num, uint8_t reg
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////INITIALISE////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+static esp_err_t i2c_master_init()
+{
+    int i2c_master_port = I2C_EXAMPLE_MASTER_NUM;
+    i2c_config_t conf;
+    conf.mode = I2C_MODE_MASTER;
+    conf.sda_io_num = I2C_EXAMPLE_MASTER_SDA_IO;
+    conf.sda_pullup_en = 1;
+    conf.scl_io_num = I2C_EXAMPLE_MASTER_SCL_IO;
+    conf.scl_pullup_en = 1;
+    conf.clk_stretch_tick = 300; // 300 ticks, Clock stretch is about 210us, you can make changes according to the actual situation.
+    ESP_ERROR_CHECK(i2c_driver_install(i2c_master_port, conf.mode));
+    ESP_ERROR_CHECK(i2c_param_config(i2c_master_port, &conf));
+
+    return ESP_OK;
+}
+
+static esp_err_t i2c_master_ads1115_init(i2c_port_t i2c_num)
+{
+    //uint8_t cmd_data;
+    vTaskDelay(100 / portTICK_RATE_MS);
+    i2c_master_init();
+    
+    ESP_ERROR_CHECK( i2c_master_ads1115_write_string(i2c_num, 0x01 , 0b1000010010000011 ));
+    //THe binary string represents the configuration bits given in the quickstart section of the ads1115 datasheet
+
+    return ESP_OK;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////INITIALISE////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////MAIN ///////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -200,7 +202,7 @@ static void i2c_task(void *arg)
             ESP_LOGI(TAG, "Succesfully read value from from ADC \n");
 
             printf("The return from the ADC is ");
-            printf(int(ret));
+            //printf(int(ret));
             printf("\n");
 
 
